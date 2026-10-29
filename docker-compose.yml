@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: myaayaam-postgres
+
+    environment:
+      POSTGRES_USER: myaayaam_user
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: myaayaam_db
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - myaayaam_postgres_data:/var/lib/postgresql
+      - ./database/migrations:/docker-entrypoint-initdb.d
+
+volumes:
+  myaayaam_postgres_data:
+    external: true
