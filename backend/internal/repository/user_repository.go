@@ -13,6 +13,7 @@ import (
 var (
 	ErrUserNotFound    = errors.New("user not found")
 	ErrInactiveAccount = errors.New("user account is inactive")
+	ErrDepartmentInactive = errors.New("department is inactive")
 )
 
 const userColumns = `id, name, email, password_hash, role,
@@ -164,7 +165,24 @@ func IsDepartmentActive(ctx context.Context, departmentID int64) (bool, error) {
 }
 
 func CreateManagedUser(ctx context.Context, user *model.User) error {
-	err := database.DB.QueryRow(ctx, `
+	tx, err := database.DB.Begin(ctx)
+	if err != nil {
+		return fmt.Errorf("begin create user transaction: %w", err)
+	}
+	defer tx.Rollback(ctx)
+
+	var departmentActive bool
+	if err := tx.QueryRow(ctx, "SELECT is_active FROM departments WHERE id = $1 FOR SHARE", *user.DepartmentID).Scan(&departmentActive); err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return ErrDepartmentNotFound
+		}
+		return fmt.Errorf("lock user department: %w", err)
+	}
+	if !departmentActive {
+		return ErrDepartmentInactive
+	}
+
+	err = tx.QueryRow(ctx, `
 		INSERT INTO users (name, email, password_hash, role, department_id)
 		VALUES ($1, $2, $3, $4, $5)
 		RETURNING id, is_active, created_at, updated_at
@@ -174,12 +192,15 @@ func CreateManagedUser(ctx context.Context, user *model.User) error {
 	if err != nil {
 		return fmt.Errorf("create managed user: %w", err)
 	}
+	if err := tx.Commit(ctx); err != nil {
+		return fmt.Errorf("commit create user transaction: %w", err)
+	}
 	return nil
 }
 
 // Department Admins can only update workers in their own department.
 // Role and department membership are intentionally immutable through this endpoint.
-func UpdateManagedUser(ctx context.Context, userID int64, name, email string, departmentID *int64, workersOnly, allowSelf bool) (*model.User, error) {
+func UpdateManagedUser(ctx context.Context, userID int64, name, email string, departmentID *int64, workersOnly bool) (*model.User, error) {
 	query := `UPDATE users
 		SET name = $2, email = $3, updated_at = NOW()
 		WHERE id = $1 AND role <> 'super_admin'`
