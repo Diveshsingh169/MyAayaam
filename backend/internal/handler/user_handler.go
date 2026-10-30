@@ -2,9 +2,7 @@ package handler
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
-	"io"
 	"net/http"
 	"strconv"
 	"time"
@@ -172,6 +170,3 @@ func writeUserError(w http.ResponseWriter, err error) {
 	}
 }
 
-// Keep strict JSON decoding consistent across management endpoints.
-var _ = json.Valid
-var _ = io.EOF
