@@ -105,7 +105,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .brand-name > span { color: var(--lavender); }
 
 .workspace-label, .welcome-footer, .eyebrow, .insight-kicker, .insight-period {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 1.35px;
 }
@@ -130,9 +130,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
   box-shadow: 0 16px 45px rgba(67, 63, 99, .055);
   backdrop-filter: blur(12px);
 }
-.insight-kicker { color: #9a98a5; font-size: 8px; }
+.insight-kicker { color: #9a98a5; font-size: 11px; }
 .insight-heading p { margin: 5px 0 0; color: #353647; font-size: 15px; font-weight: 620; letter-spacing: -.3px; }
-.insight-period { color: #9997a5; font-size: 8px; letter-spacing: .9px; }
+.insight-period { color: #9997a5; font-size: 11px; letter-spacing: .9px; }
 .insight-period span { margin-left: 5px; color: #7772a8; font-size: 13px; }
 .insight-visual { position: relative; height: 104px; margin-top: 17px; overflow: hidden; border-radius: 11px; background: #f0eff5; }
 .visual-bars { position: absolute; inset: 17px 17px 25px; display: flex; align-items: end; gap: 8px; }
@@ -141,14 +141,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .visual-bars span:nth-child(4n) { height: 52%; background: #b4b1cb; }
 .visual-bars span:nth-child(5n) { height: 88%; background: #7772a8; }
 .visual-bars span:nth-child(7n) { height: 62%; background: #b9c5b6; }
-.visual-caption { position: absolute; right: 17px; bottom: 8px; left: 17px; color: #9695a2; font-size: 8px; }
-.insight-footer { justify-content: flex-start; gap: 10px; margin-top: 15px; color: #888896; font-size: 10px; }
+.visual-caption { position: absolute; right: 17px; bottom: 8px; left: 17px; color: #9695a2; font-size: 11px; }
+.insight-footer { justify-content: flex-start; gap: 10px; margin-top: 15px; color: #888896; font-size: 12px; }
 .footer-orbit { display: flex; align-items: center; padding-left: 2px; }
 .footer-orbit span { width: 8px; height: 8px; margin-left: -2px; border: 1.5px solid #fffefa; border-radius: 50%; background: #a9b8a6; }
 .footer-orbit span:nth-child(2) { background: #d9b6a5; }
 .footer-orbit span:nth-child(3) { background: #9691bb; }
 .footer-spark { margin-left: auto; color: #9b97bd; font-size: 17px; }
-.welcome-footer { color: #9998a8; font-size: 8px; letter-spacing: 1.1px; }
+.welcome-footer { color: #9998a8; font-size: 10px; letter-spacing: 1.1px; }
 .decor { position: absolute; z-index: -1; border-radius: 50%; filter: blur(1px); }
 .decor-one { top: 23%; right: 12%; width: 10px; height: 10px; background: #d7c8d9; }
 .decor-two { right: 8%; bottom: 24%; width: 6px; height: 6px; background: #b8c5b4; }
@@ -173,20 +173,20 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .login-heading p { margin: 0; color: #92919c; font-size: 13px; line-height: 1.7; }
 
 .login-form { display: flex; flex-direction: column; }
-.field-label { margin-bottom: 9px; color: #484957; font-size: 11px; font-weight: 650; }
+.field-label { margin-bottom: 9px; color: #484957; font-size: 13px; font-weight: 650; }
 .password-label-row { margin-top: 21px; }
-.text-action { margin: 0 0 9px; padding: 0; border: 0; background: transparent; color: #7772a8; cursor: pointer; font-size: 10px; font-weight: 620; }
+.text-action { margin: 0 0 9px; padding: 0; border: 0; background: transparent; color: #7772a8; cursor: pointer; font-size: 12px; font-weight: 620; }
 .text-action:hover { color: #514c80; }
 .input-wrap { position: relative; display: flex; height: 51px; align-items: center; border: 1px solid #e8e6e2; border-radius: 12px; background: #fff; transition: border-color .2s ease, box-shadow .2s ease, background .2s ease; }
 .input-wrap:focus-within { border-color: #a7a2c8; background: #fff; box-shadow: 0 0 0 4px rgba(119,114,168,.10); }
-.input-wrap input { width: 100%; height: 100%; padding: 0 44px 0 43px; border: 0; outline: 0; border-radius: inherit; background: transparent; color: #343545; font-size: 12px; }
+.input-wrap input { width: 100%; height: 100%; padding: 0 44px 0 43px; border: 0; outline: 0; border-radius: inherit; background: transparent; color: #343545; font-size: 14px; }
 .input-wrap input::placeholder { color: #b5b4bd; }
 .field-icon { position: absolute; left: 15px; width: 16px; height: 16px; fill: none; stroke: #a4a2af; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .password-toggle { position: absolute; right: 13px; display: grid; width: 27px; height: 27px; place-items: center; border: 0; border-radius: 7px; background: transparent; color: #9998a5; cursor: pointer; }
 .password-toggle:hover { background: #f3f2f7; color: #65618e; }
 .password-toggle svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
-.remember-row { position: relative; justify-content: flex-start; gap: 9px; margin: 20px 0 25px; color: #858490; cursor: pointer; font-size: 11px; }
+.remember-row { position: relative; justify-content: flex-start; gap: 9px; margin: 20px 0 25px; color: #858490; cursor: pointer; font-size: 13px; }
 .remember-row input { position: absolute; width: 1px; height: 1px; opacity: 0; }
 .custom-check { display: grid; width: 16px; height: 16px; place-items: center; border: 1px solid #dcd9e5; border-radius: 5px; background: #fff; transition: all .18s ease; }
 .custom-check svg { width: 11px; height: 11px; fill: none; stroke: #fff; stroke-width: 2; opacity: 0; }
@@ -194,18 +194,18 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .remember-row input:checked + .custom-check svg { opacity: 1; }
 .remember-row input:focus-visible + .custom-check { outline: 3px solid rgba(119,114,168,.2); outline-offset: 2px; }
 
-.sign-in-button { display: flex; height: 53px; align-items: center; justify-content: space-between; padding: 0 9px 0 19px; border: 0; border-radius: 12px; background: #7772a8; color: #fff; cursor: pointer; font-size: 12px; font-weight: 650; box-shadow: 0 7px 16px rgba(100,95,145,.16); transition: transform .2s ease, background .2s ease, box-shadow .2s ease; }
+.sign-in-button { display: flex; height: 53px; align-items: center; justify-content: space-between; padding: 0 9px 0 19px; border: 0; border-radius: 12px; background: #7772a8; color: #fff; cursor: pointer; font-size: 14px; font-weight: 650; box-shadow: 0 7px 16px rgba(100,95,145,.16); transition: transform .2s ease, background .2s ease, box-shadow .2s ease; }
 .sign-in-button:hover { transform: translateY(-1px); background: #696494; box-shadow: 0 10px 20px rgba(100,95,145,.2); }
 .sign-in-button:active { transform: translateY(0); }
 .sign-in-button:focus-visible, .text-action:focus-visible, .password-toggle:focus-visible { outline: 3px solid rgba(119,114,168,.25); outline-offset: 3px; }
 .button-icon { display: grid; width: 35px; height: 35px; place-items: center; border: 1px solid rgba(255,255,255,.22); border-radius: 9px; background: rgba(255,255,255,.12); }
 .button-icon svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-.form-notice { margin: 13px 0 0; padding: 11px 12px; border: 1px solid #e5e1f0; border-radius: 9px; background: #f6f5fa; color: #6e698e; font-size: 11px; line-height: 1.6; }
+.form-notice { margin: 13px 0 0; padding: 11px 12px; border: 1px solid #e5e1f0; border-radius: 9px; background: #f6f5fa; color: #6e698e; font-size: 13px; line-height: 1.6; }
 
-.security-note { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 30px; color: #a09faa; font-size: 10px; }
+.security-note { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 30px; color: #a09faa; font-size: 12px; }
 .security-icon { display: grid; width: 22px; height: 22px; place-items: center; border-radius: 7px; background: #f0f2ed; color: #8da18a; }
 .security-icon svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.login-footer { width: 100%; color: #aaa9b1; font-size: 9px; }
+.login-footer { width: 100%; color: #aaa9b1; font-size: 11px; }
 .footer-links { gap: 8px; }
 .footer-links a { color: #817ca5; text-decoration: none; }
 .footer-links a:hover { text-decoration: underline; }
