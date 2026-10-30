@@ -85,7 +85,7 @@ export default function DashboardPage() {
         <p className="nav-caption">WORKSPACE</p>
         <nav className="side-navigation" aria-label="Main navigation">
           <a className="side-link active" href="/dashboard"><span className="nav-icon">◫</span> Overview</a>
-          {user.role === "super_admin" && <a className="side-link" href="#departments"><span className="nav-icon">▦</span> Departments</a>}
+          {user.role === "super_admin" && <a className="side-link" href="/dashboard/departments"><span className="nav-icon">▦</span> Departments</a>}
           {(user.role === "super_admin" || user.role === "department_admin") && <a className="side-link" href="#users"><span className="nav-icon">♙</span> User management</a>}
           <a className="side-link disabled" href="#inventory" aria-disabled="true"><span className="nav-icon">▤</span> Inventory <span className="coming-soon">Soon</span></a>
           <a className="side-link disabled" href="#products" aria-disabled="true"><span className="nav-icon">◇</span> Products <span className="coming-soon">Soon</span></a>
