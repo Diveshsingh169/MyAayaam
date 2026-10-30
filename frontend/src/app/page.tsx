@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { FormEvent } from "react";
 import Image from "next/image";
 
@@ -27,13 +28,48 @@ function ArrowIcon() {
 }
 
 export default function Home() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(true);
   const [notice, setNotice] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setNotice("The sign-in screen is ready. API authentication will be connected in the next step.");
+    if (isSubmitting) return;
+
+    const formData = new FormData(event.currentTarget);
+    const email = String(formData.get("email") || "").trim();
+    const password = String(formData.get("password") || "");
+
+    setNotice("");
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, remember }),
+      });
+      const payload = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        setNotice(payload?.message || "We couldn't sign you in. Check your details and try again.");
+        return;
+      }
+
+      const requestedPath = searchParams.get("next");
+      const destination = requestedPath && requestedPath.startsWith("/") && !requestedPath.startsWith("//")
+        ? requestedPath
+        : "/dashboard";
+      router.replace(destination);
+      router.refresh();
+    } catch {
+      setNotice("Unable to reach MyAayaam. Please check that the application is running and try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
