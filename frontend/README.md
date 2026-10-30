@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MyAayaam Frontend
 
-## Getting Started
+Next.js application for the MyAayaam Inventory Management System.
 
-First, run the development server:
+## Requirements
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js 20.9 or later
+- Go API running locally on port 8080
+- PostgreSQL available to the Go API
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Local setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Install dependencies:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```powershell
+   npm install
+   ```
 
-## Learn More
+2. Create a local environment file:
 
-To learn more about Next.js, take a look at the following resources:
+   ```powershell
+   Copy-Item .env.example .env.local
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Confirm `.env.local` contains the server-side Go API URL:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```env
+   MYAAYAAM_API_URL=http://localhost:8080
+   ```
 
-## Deploy on Vercel
+4. Start the Go API using the existing backend instructions.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. Start Next.js:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   ```powershell
+   npm run dev
+   ```
+
+Open http://localhost:3000.
+
+## Authentication flow
+
+The browser communicates with Next.js routes under `/api/auth/*`. These routes call the Go API server-side and store access and refresh tokens in HttpOnly cookies.
+
+- `POST /api/auth/login` — signs in and sets session cookies.
+- `GET /api/auth/me` — returns the current user and refreshes an expired access token when possible.
+- `POST /api/auth/refresh` — rotates the refresh token.
+- `POST /api/auth/logout` — revokes the refresh token and clears cookies.
+
+The dashboard is under `/dashboard`. User role information comes from the authenticated Go API response, not browser-provided role data.
+
+## Notes
+
+- Never commit `.env.local` or real secrets.
+- `MYAAYAAM_API_URL` is server-only. Do not rename it to a `NEXT_PUBLIC_*` variable.
+- The current dashboard is a starter shell. Department and user management screens will be implemented in later steps.
