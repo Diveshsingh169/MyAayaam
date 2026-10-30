@@ -86,14 +86,14 @@ export default function DashboardPage() {
         <nav className="side-navigation" aria-label="Main navigation">
           <a className="side-link active" href="/dashboard"><span className="nav-icon">◫</span> Overview</a>
           {user.role === "super_admin" && <a className="side-link" href="/dashboard/departments"><span className="nav-icon">▦</span> Departments</a>}
-          {(user.role === "super_admin" || user.role === "department_admin") && <a className="side-link" href="#users"><span className="nav-icon">♙</span> User management</a>}
-          <a className="side-link disabled" href="#inventory" aria-disabled="true"><span className="nav-icon">▤</span> Inventory <span className="coming-soon">Soon</span></a>
-          <a className="side-link disabled" href="#products" aria-disabled="true"><span className="nav-icon">◇</span> Products <span className="coming-soon">Soon</span></a>
-          <a className="side-link disabled" href="#reports" aria-disabled="true"><span className="nav-icon">▥</span> Reports <span className="coming-soon">Soon</span></a>
+          {(user.role === "super_admin" || user.role === "department_admin") && <span className="side-link disabled" aria-disabled="true"><span className="nav-icon">♙</span> User management <span className="coming-soon">Soon</span></span>}
+          <span className="side-link disabled" aria-disabled="true"><span className="nav-icon">▤</span> Inventory <span className="coming-soon">Soon</span></span>
+          <span className="side-link disabled" aria-disabled="true"><span className="nav-icon">◇</span> Products <span className="coming-soon">Soon</span></span>
+          <span className="side-link disabled" aria-disabled="true"><span className="nav-icon">▥</span> Reports <span className="coming-soon">Soon</span></span>
         </nav>
         <div className="sidebar-bottom">
-          <div className="help-card"><span className="help-spark">✳</span><strong>Need a hand?</strong><p>Your workspace is just getting started.</p><a href="mailto:support@myaayaam.com">Contact support ↗</a></div>
-          <button className="profile-mini" type="button">
+          <div className="help-card"><span className="help-spark">✳</span><strong>Need a hand?</strong><p>Your workspace is just getting started.</p><span className="help-contact-disabled">Support options coming soon</span></div>
+          <div className="profile-mini">
             <span className="profile-avatar">{user.name.slice(0, 1).toUpperCase()}</span>
             <span className="profile-details"><strong>{user.name}</strong><small>{roleLabels[user.role]}</small></span>
             <span className="profile-menu">···</span>
@@ -103,7 +103,7 @@ export default function DashboardPage() {
 
       <section className="dashboard-main">
         <header className="dashboard-topbar">
-          <div className="breadcrumb">Workspace <span>/</span> <strong>Overview</strong></div>
+          <div className="breadcrumb"><span className="breadcrumb-root">Workspace</span><span className="breadcrumb-separator">/</span><strong aria-current="page">Overview</strong></div>
           <div className="topbar-actions"><span className="today-label">YOUR WORKSPACE, AT A GLANCE</span><span className="topbar-avatar">{user.name.slice(0, 1).toUpperCase()}</span></div>
         </header>
 
