@@ -81,7 +81,6 @@ export default function DashboardPage() {
         <div className="workspace-switcher">
           <span className="workspace-avatar">M</span>
           <span><strong>MyAayaam</strong><small>Inventory workspace</small></span>
-          <span className="switcher-chevron">⌄</span>
         </div>
         <p className="nav-caption">WORKSPACE</p>
         <nav className="side-navigation" aria-label="Main navigation">
