@@ -7,7 +7,6 @@ import (
 	"io"
 	"net/http"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/Diveshsingh169/MyAayaam/backend/internal/repository"
@@ -62,8 +61,10 @@ func (h *DepartmentHandler) Item(w http.ResponseWriter, r *http.Request) {
 		h.update(w, r, id)
 	case http.MethodDelete:
 		h.deactivate(w, r, id)
+	case http.MethodPatch:
+		h.changeStatus(w, r, id)
 	default:
-		w.Header().Set("Allow", "GET, PUT, DELETE")
+		w.Header().Set("Allow", "GET, PUT, PATCH, DELETE")
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
 }
@@ -116,6 +117,31 @@ func (h *DepartmentHandler) update(w http.ResponseWriter, r *http.Request, id in
 	})
 }
 
+
+func (h *DepartmentHandler) changeStatus(w http.ResponseWriter, r *http.Request, id int64) {
+	var req struct {
+		IsActive *bool `json:"is_active"`
+	}
+	if !decodeDepartmentRequest(w, r, &req) {
+		return
+	}
+	if req.IsActive == nil {
+		http.Error(w, "is_active is required", http.StatusBadRequest)
+		return
+	}
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	defer cancel()
+	if err := h.service.SetActive(ctx, id, *req.IsActive); err != nil {
+		writeDepartmentError(w, err)
+		return
+	}
+	message := "Department deactivated successfully"
+	if *req.IsActive {
+		message = "Department activated successfully"
+	}
+	writeJSON(w, http.StatusOK, map[string]string{"message": message})
+}
+
 func (h *DepartmentHandler) deactivate(w http.ResponseWriter, r *http.Request, id int64) {
 	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
 	defer cancel()
@@ -165,4 +191,3 @@ func writeJSON(w http.ResponseWriter, status int, value any) {
 	_ = json.NewEncoder(w).Encode(value)
 }
 
-var _ = strings.TrimSpace
