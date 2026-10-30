@@ -16,7 +16,7 @@ var (
 	ErrInvalidUser       = errors.New("invalid user")
 	ErrUserForbidden     = errors.New("user management is not permitted")
 	ErrDepartmentInactive = errors.New("department is inactive")
-	ErrCannotManageSelf  = errors.New("users cannot change their own management status")
+	ErrCannotManageSelf  = errors.New("users cannot modify their own account through user management")
 )
 
 type UserService struct{}
@@ -131,14 +131,14 @@ func (s *UserService) Update(ctx context.Context, actor *model.User, targetID in
 	if name == "" || len(name) > 100 || email == "" || len(email) > 150 {
 		return nil, fmt.Errorf("%w: name or email is invalid", ErrInvalidUser)
 	}
-	if _, err := mail.ParseAddress(email); err != nil {
+	parsedEmail, err := mail.ParseAddress(email)
+	if err != nil || parsedEmail.Address != email {
 		return nil, fmt.Errorf("%w: a valid email address is required", ErrInvalidUser)
 	}
 
 	switch actor.Role {
 	case model.RoleSuperAdmin:
 		if targetID == actor.ID {
-			// Super Admin may update their own profile, but role/department remain immutable.
 			return nil, ErrCannotManageSelf
 		}
 		return repository.UpdateManagedUser(ctx, targetID, name, email, nil, false)
