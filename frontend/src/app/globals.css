@@ -10,6 +10,21 @@
   --sage: #a9b8a6;
   --peach: #e9c5b2;
   --font-body: var(--font-geist), "Inter", sans-serif;
+
+  /* Shared typography scale: use these tokens across every feature page. */
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-caption: var(--text-xs);
+  --text-label: var(--text-sm);
+  --text-body: var(--text-base);
+  --line-height-body: 1.65;
+  --line-height-compact: 1.4;
 }
 
 
@@ -22,7 +37,8 @@ body {
   background: var(--canvas);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: var(--text-body);
+  line-height: var(--line-height-body);
   -webkit-font-smoothing: antialiased;
 }
 
