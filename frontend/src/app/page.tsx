@@ -1,6 +1,7 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { useState } from "react";
+import type { FormEvent } from "react";
 import Image from "next/image";
 
 function EyeIcon({ visible }: { visible: boolean }) {
