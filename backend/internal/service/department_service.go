@@ -31,8 +31,8 @@ func (s *DepartmentService) Get(ctx context.Context, id int64) (*model.Departmen
 
 func (s *DepartmentService) Create(ctx context.Context, name, code string, description *string) (*model.Department, error) {
 	department := &model.Department{
-		Name: strings.TrimSpace(name),
-		Code: strings.ToUpper(strings.TrimSpace(code)),
+		Name:        strings.TrimSpace(name),
+		Code:        strings.ToUpper(strings.TrimSpace(code)),
 		Description: cleanDescription(description),
 	}
 	if err := validateDepartment(department); err != nil {
@@ -49,9 +49,9 @@ func (s *DepartmentService) Update(ctx context.Context, id int64, name, code str
 		return nil, ErrInvalidDepartment
 	}
 	department := &model.Department{
-		ID: id,
-		Name: strings.TrimSpace(name),
-		Code: strings.ToUpper(strings.TrimSpace(code)),
+		ID:          id,
+		Name:        strings.TrimSpace(name),
+		Code:        strings.ToUpper(strings.TrimSpace(code)),
 		Description: cleanDescription(description),
 	}
 	if err := validateDepartment(department); err != nil {

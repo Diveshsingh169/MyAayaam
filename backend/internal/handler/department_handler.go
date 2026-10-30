@@ -94,7 +94,7 @@ func (h *DepartmentHandler) create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	writeJSON(w, http.StatusCreated, map[string]any{
-		"message": "Department created successfully",
+		"message":    "Department created successfully",
 		"department": department,
 	})
 }
@@ -112,11 +112,10 @@ func (h *DepartmentHandler) update(w http.ResponseWriter, r *http.Request, id in
 		return
 	}
 	writeJSON(w, http.StatusOK, map[string]any{
-		"message": "Department updated successfully",
+		"message":    "Department updated successfully",
 		"department": department,
 	})
 }
-
 
 func (h *DepartmentHandler) changeStatus(w http.ResponseWriter, r *http.Request, id int64) {
 	var req struct {
@@ -190,4 +189,3 @@ func writeJSON(w http.ResponseWriter, status int, value any) {
 	w.WriteHeader(status)
 	_ = json.NewEncoder(w).Encode(value)
 }
-
