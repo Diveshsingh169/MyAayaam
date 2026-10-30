@@ -1,6 +1,6 @@
-import "./dashboard.css";
-
 "use client";
+
+import "./dashboard.css";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
