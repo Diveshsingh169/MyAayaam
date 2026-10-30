@@ -1,3 +1,4 @@
+import "../dashboard.css";
 import "./departments.css";
 
 export default function DepartmentsLayout({ children }: { children: React.ReactNode }) {
