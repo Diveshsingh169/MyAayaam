@@ -11,8 +11,8 @@ import (
 )
 
 var (
-	ErrUserNotFound    = errors.New("user not found")
-	ErrInactiveAccount = errors.New("user account is inactive")
+	ErrUserNotFound       = errors.New("user not found")
+	ErrInactiveAccount    = errors.New("user account is inactive")
 	ErrDepartmentInactive = errors.New("department is inactive")
 )
 

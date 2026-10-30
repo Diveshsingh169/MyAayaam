@@ -23,11 +23,11 @@ func NewUserHandler() *UserHandler {
 }
 
 type createUserRequest struct {
-	Name         string          `json:"name"`
-	Email        string          `json:"email"`
-	Password     string          `json:"password"`
-	Role         model.UserRole  `json:"role"`
-	DepartmentID *int64          `json:"department_id"`
+	Name         string         `json:"name"`
+	Email        string         `json:"email"`
+	Password     string         `json:"password"`
+	Role         model.UserRole `json:"role"`
+	DepartmentID *int64         `json:"department_id"`
 }
 
 type updateUserRequest struct {
@@ -66,7 +66,7 @@ func (h *UserHandler) Collection(w http.ResponseWriter, r *http.Request) {
 		}
 		writeJSON(w, http.StatusCreated, map[string]any{
 			"message": "User created successfully",
-			"user": user,
+			"user":    user,
 		})
 	default:
 		w.Header().Set("Allow", "GET, POST")
@@ -110,7 +110,7 @@ func (h *UserHandler) Item(w http.ResponseWriter, r *http.Request) {
 		}
 		writeJSON(w, http.StatusOK, map[string]any{
 			"message": "User updated successfully",
-			"user": user,
+			"user":    user,
 		})
 	case http.MethodPatch:
 		var req struct {
@@ -169,4 +169,3 @@ func writeUserError(w http.ResponseWriter, err error) {
 		http.Error(w, "Unable to process user request", http.StatusInternalServerError)
 	}
 }
-

@@ -13,10 +13,10 @@ import (
 )
 
 var (
-	ErrInvalidUser       = errors.New("invalid user")
-	ErrUserForbidden     = errors.New("user management is not permitted")
+	ErrInvalidUser        = errors.New("invalid user")
+	ErrUserForbidden      = errors.New("user management is not permitted")
 	ErrDepartmentInactive = errors.New("department is inactive")
-	ErrCannotManageSelf  = errors.New("users cannot modify their own account through user management")
+	ErrCannotManageSelf   = errors.New("users cannot modify their own account through user management")
 )
 
 type UserService struct{}
