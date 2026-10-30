@@ -65,11 +65,11 @@ func (s *UserService) Create(ctx context.Context, actor *model.User, name, email
 
 	name = strings.TrimSpace(name)
 	email = strings.ToLower(strings.TrimSpace(email))
-	password = strings.TrimSpace(password)
 	if name == "" || len(name) > 100 || email == "" || len(email) > 150 {
 		return nil, fmt.Errorf("%w: name or email is invalid", ErrInvalidUser)
 	}
-	if _, err := mail.ParseAddress(email); err != nil {
+	parsedEmail, err := mail.ParseAddress(email)
+	if err != nil || parsedEmail.Address != email {
 		return nil, fmt.Errorf("%w: a valid email address is required", ErrInvalidUser)
 	}
 	if len(password) < 12 || len(password) > 128 {
@@ -139,14 +139,14 @@ func (s *UserService) Update(ctx context.Context, actor *model.User, targetID in
 	case model.RoleSuperAdmin:
 		if targetID == actor.ID {
 			// Super Admin may update their own profile, but role/department remain immutable.
-			return repository.UpdateManagedUser(ctx, targetID, name, email, nil, false, true)
+			return nil, ErrCannotManageSelf
 		}
-		return repository.UpdateManagedUser(ctx, targetID, name, email, nil, false, false)
+		return repository.UpdateManagedUser(ctx, targetID, name, email, nil, false)
 	case model.RoleDepartmentAdmin:
 		if actor.DepartmentID == nil {
 			return nil, ErrUserForbidden
 		}
-		return repository.UpdateManagedUser(ctx, targetID, name, email, actor.DepartmentID, true, false)
+		return repository.UpdateManagedUser(ctx, targetID, name, email, actor.DepartmentID, true)
 	default:
 		return nil, ErrUserForbidden
 	}
