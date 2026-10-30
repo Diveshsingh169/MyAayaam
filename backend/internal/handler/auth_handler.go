@@ -40,7 +40,8 @@ type safeUserData struct {
 	ID        int64     `json:"id"`
 	Name      string    `json:"name"`
 	Email     string    `json:"email"`
-	Role      string    `json:"role"`
+	Role         string `json:"role"`
+	DepartmentID *int64 `json:"department_id"`
 	IsActive  bool      `json:"is_active"`
 	CreatedAt time.Time `json:"created_at"`
 }
@@ -113,7 +114,8 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 			ID:        user.ID,
 			Name:      user.Name,
 			Email:     user.Email,
-			Role:      string(user.Role),
+			Role:         string(user.Role),
+			DepartmentID: user.DepartmentID,
 			IsActive:  user.IsActive,
 			CreatedAt: user.CreatedAt,
 		},
