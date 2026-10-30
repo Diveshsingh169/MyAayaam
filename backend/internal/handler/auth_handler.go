@@ -113,7 +113,7 @@ func (h *AuthHandler) Login(w http.ResponseWriter, r *http.Request) {
 			ID:        user.ID,
 			Name:      user.Name,
 			Email:     user.Email,
-			Role:      user.Role,
+			Role:      string(user.Role),
 			IsActive:  user.IsActive,
 			CreatedAt: user.CreatedAt,
 		},
