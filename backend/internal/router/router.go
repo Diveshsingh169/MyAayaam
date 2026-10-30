@@ -40,6 +40,7 @@ func NewRouter() *http.ServeMux {
 	mux.Handle("GET /api/v1/departments/{id}", superAdminOnly(http.HandlerFunc(departmentHandler.Item)))
 	mux.Handle("PUT /api/v1/departments/{id}", superAdminOnly(http.HandlerFunc(departmentHandler.Item)))
 	mux.Handle("DELETE /api/v1/departments/{id}", superAdminOnly(http.HandlerFunc(departmentHandler.Item)))
+	mux.Handle("PATCH /api/v1/departments/{id}", superAdminOnly(http.HandlerFunc(departmentHandler.Item)))
 
 	return mux
 }
