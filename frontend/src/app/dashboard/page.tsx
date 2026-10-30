@@ -1,6 +1,7 @@
 "use client";
 
 import "./dashboard.css";
+import WorkspaceHeader from "@/components/workspace-header";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -101,10 +102,7 @@ export default function DashboardPage() {
       </aside>
 
       <section className="dashboard-main">
-        <header className="dashboard-topbar">
-          <div className="breadcrumb"><span className="breadcrumb-root">Workspace</span><span className="breadcrumb-separator">/</span><strong aria-current="page">Overview</strong></div>
-          <div className="topbar-actions"><span className="today-label">YOUR WORKSPACE, AT A GLANCE</span><span className="topbar-avatar">{user.name.slice(0, 1).toUpperCase()}</span></div>
-        </header>
+        <WorkspaceHeader currentPage="Overview" contextLabel="YOUR WORKSPACE, AT A GLANCE" />
 
         <div className="dashboard-content">
           <div className="dashboard-welcome">
