@@ -1,4 +1,3 @@
-
 package repository
 
 import (
@@ -12,7 +11,7 @@ import (
 )
 
 var (
-	ErrUserNotFound  = errors.New("user not found")
+	ErrUserNotFound    = errors.New("user not found")
 	ErrInactiveAccount = errors.New("user account is inactive")
 )
 
@@ -20,8 +19,8 @@ func GetUserByEmail(ctx context.Context, email string) (*model.User, error) {
 	user := &model.User{}
 
 	err := database.DB.QueryRow(ctx, `
-		SELECT id, name, email, password_hash, role, is_active,
-		       created_at, updated_at
+		SELECT id, name, email, password_hash, role,
+		       department_id, is_active, created_at, updated_at
 		FROM users
 		WHERE email = $1
 		LIMIT 1
@@ -31,6 +30,7 @@ func GetUserByEmail(ctx context.Context, email string) (*model.User, error) {
 		&user.Email,
 		&user.PasswordHash,
 		&user.Role,
+		&user.DepartmentID,
 		&user.IsActive,
 		&user.CreatedAt,
 		&user.UpdatedAt,
@@ -50,8 +50,8 @@ func GetUserByID(ctx context.Context, userID int64) (*model.User, error) {
 	user := &model.User{}
 
 	err := database.DB.QueryRow(ctx, `
-		SELECT id, name, email, password_hash, role, is_active,
-		       created_at, updated_at
+		SELECT id, name, email, password_hash, role,
+		       department_id, is_active, created_at, updated_at
 		FROM users
 		WHERE id = $1
 	`, userID).Scan(
@@ -60,6 +60,7 @@ func GetUserByID(ctx context.Context, userID int64) (*model.User, error) {
 		&user.Email,
 		&user.PasswordHash,
 		&user.Role,
+		&user.DepartmentID,
 		&user.IsActive,
 		&user.CreatedAt,
 		&user.UpdatedAt,
