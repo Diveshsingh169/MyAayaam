@@ -1,3 +1,5 @@
+import "./dashboard.css";
+
 "use client";
 
 import { useEffect, useState } from "react";
