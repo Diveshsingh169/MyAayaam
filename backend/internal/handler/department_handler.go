@@ -152,7 +152,7 @@ func (h *DepartmentHandler) deactivate(w http.ResponseWriter, r *http.Request, i
 	writeJSON(w, http.StatusOK, map[string]string{"message": "Department deactivated successfully"})
 }
 
-func decodeDepartmentRequest(w http.ResponseWriter, r *http.Request, req *departmentRequest) bool {
+func decodeDepartmentRequest[T any](w http.ResponseWriter, r *http.Request, req *T) bool {
 	r.Body = http.MaxBytesReader(w, r.Body, 16*1024)
 	decoder := json.NewDecoder(r.Body)
 	decoder.DisallowUnknownFields()
