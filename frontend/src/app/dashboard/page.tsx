@@ -96,8 +96,7 @@ export default function DashboardPage() {
           <div className="profile-mini">
             <span className="profile-avatar">{user.name.slice(0, 1).toUpperCase()}</span>
             <span className="profile-details"><strong>{user.name}</strong><small>{roleLabels[user.role]}</small></span>
-            <span className="profile-menu">···</span>
-          </button>
+          </div>
         </div>
       </aside>
 
