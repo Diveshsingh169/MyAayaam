@@ -92,3 +92,22 @@
 .loading-mark { display: grid; width: 52px; height: 52px; place-items: center; border-radius: 16px; background: #eeedf4; }
 @media (max-width: 1000px) { .dashboard-shell { grid-template-columns: 218px minmax(0,1fr); } .dashboard-sidebar { padding-right: 12px; padding-left: 12px; } .banner-art { margin-right: 0; transform: scale(.85); } }
 @media (max-width: 760px) { .dashboard-shell { display: block; } .dashboard-sidebar { position: static; height: auto; padding: 15px 18px; border-right: 0; border-bottom: 1px solid #eceae5; } .dashboard-brand { padding: 0; } .workspace-switcher, .nav-caption, .sidebar-bottom { display: none; } .side-navigation { display: flex; gap: 5px; margin-top: 17px; overflow-x: auto; } .side-link { min-height: 35px; flex: 0 0 auto; padding: 0 10px; font-size: 9px; } .side-link:not(.active) .coming-soon { display: none; } .dashboard-topbar { height: 53px; padding: 0 19px; } .today-label { display: none; } .dashboard-content { padding: 28px 19px 24px; } .dashboard-welcome { align-items: start; flex-direction: column; } .welcome-banner { min-height: 205px; padding: 24px; } .banner-art { position: absolute; right: -38px; bottom: -35px; opacity: .45; transform: scale(.75); } .welcome-banner > div:first-child { position: relative; z-index: 1; } .overview-grid { grid-template-columns: 1fr; } .overview-card { min-height: 145px; } .section-heading { align-items: start; flex-direction: column; } .account-panel { align-items: start; flex-wrap: wrap; } .account-meta { margin-left: auto; } .logout-button { margin-left: auto; } }
+
+
+/* Breadcrumb links use the product's muted lavender accent, never browser-default red. */
+.breadcrumb a,
+.breadcrumb-root {
+  color: #817ca5;
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+.breadcrumb a { transition: color .18s ease; }
+.breadcrumb a:hover { color: #625d91; text-decoration: underline; }
+.breadcrumb a:focus-visible {
+  border-radius: 3px;
+  outline: 2px solid rgba(119,114,168,.35);
+  outline-offset: 3px;
+}
+.breadcrumb-separator { margin: 0 9px; color: #d1cfd5; }
+.breadcrumb strong { color: #555462; font-weight: 600; }
+.help-contact-disabled { display: inline-block; color: #9694a2; font-size: var(--text-xs); }
