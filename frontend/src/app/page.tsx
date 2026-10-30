@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import type { FormEvent } from "react";
 import Image from "next/image";
 
@@ -29,7 +29,6 @@ function ArrowIcon() {
 
 export default function Home() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(true);
   const [notice, setNotice] = useState("");
@@ -59,7 +58,7 @@ export default function Home() {
         return;
       }
 
-      const requestedPath = searchParams.get("next");
+      const requestedPath = new URLSearchParams(window.location.search).get("next");
       const destination = requestedPath && requestedPath.startsWith("/") && !requestedPath.startsWith("//")
         ? requestedPath
         : "/dashboard";
