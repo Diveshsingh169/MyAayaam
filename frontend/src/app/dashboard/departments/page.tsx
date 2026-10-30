@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import WorkspaceHeader from "@/components/workspace-header";
 
 type Department = {
   id: number;
@@ -122,7 +123,7 @@ export default function DepartmentsPage() {
         <div className="sidebar-bottom"><div className="help-card"><span className="help-spark">✳</span><strong>Need a hand?</strong><p>Your workspace is just getting started.</p><span className="help-contact-disabled">Support options coming soon</span></div></div>
       </aside>
       <section className="dashboard-main">
-        <header className="dashboard-topbar"><div className="breadcrumb"><a href="/dashboard">Workspace</a><span>/</span><strong>Departments</strong></div><div className="topbar-actions"><span className="today-label">ORGANIZE YOUR WORKSPACE</span><span className="topbar-avatar">M</span></div></header>
+        <WorkspaceHeader currentPage="Departments" contextLabel="ORGANIZE YOUR WORKSPACE" />
         <div className="departments-content">
           <div className="departments-heading"><div><span className="eyebrow"><span className="eyebrow-line" /> ORGANIZATION STRUCTURE</span><h1>Departments<span>.</span></h1><p>Create and manage the departments that organize your inventory operations.</p></div><button className="department-primary-button" onClick={openCreate} type="button">＋ Add department</button></div>
           <div className="department-stats">
