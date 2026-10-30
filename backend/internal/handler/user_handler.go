@@ -148,7 +148,7 @@ func writeUserError(w http.ResponseWriter, err error) {
 		http.Error(w, "You are not allowed to manage users", http.StatusForbidden)
 	case errors.Is(err, service.ErrCannotManageSelf):
 		http.Error(w, "You cannot change your own account status", http.StatusForbidden)
-	case errors.Is(err, service.ErrDepartmentInactive):
+	case errors.Is(err, service.ErrDepartmentInactive), errors.Is(err, repository.ErrDepartmentInactive):
 		http.Error(w, "The selected department is inactive", http.StatusConflict)
 	case errors.Is(err, repository.ErrUserNotFound):
 		http.Error(w, "User not found", http.StatusNotFound)
