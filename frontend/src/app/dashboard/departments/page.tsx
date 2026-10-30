@@ -114,12 +114,12 @@ export default function DepartmentsPage() {
         <nav className="side-navigation" aria-label="Main navigation">
           <a className="side-link" href="/dashboard"><span className="nav-icon">◫</span> Overview</a>
           <a className="side-link active" href="/dashboard/departments"><span className="nav-icon">▦</span> Departments</a>
-          <a className="side-link" href="/dashboard#users"><span className="nav-icon">♙</span> User management</a>
+          <span className="side-link disabled" aria-disabled="true"><span className="nav-icon">♙</span> User management <span className="coming-soon">Soon</span></span>
           <span className="side-link disabled"><span className="nav-icon">▤</span> Inventory <span className="coming-soon">Soon</span></span>
           <span className="side-link disabled"><span className="nav-icon">◇</span> Products <span className="coming-soon">Soon</span></span>
           <span className="side-link disabled"><span className="nav-icon">▥</span> Reports <span className="coming-soon">Soon</span></span>
         </nav>
-        <div className="sidebar-bottom"><div className="help-card"><span className="help-spark">✳</span><strong>Need a hand?</strong><p>Your workspace is just getting started.</p><a href="mailto:support@myaayaam.com">Contact support ↗</a></div></div>
+        <div className="sidebar-bottom"><div className="help-card"><span className="help-spark">✳</span><strong>Need a hand?</strong><p>Your workspace is just getting started.</p><span className="help-contact-disabled">Support options coming soon</span></div></div>
       </aside>
       <section className="dashboard-main">
         <header className="dashboard-topbar"><div className="breadcrumb"><a href="/dashboard">Workspace</a><span>/</span><strong>Departments</strong></div><div className="topbar-actions"><span className="today-label">ORGANIZE YOUR WORKSPACE</span><span className="topbar-avatar">M</span></div></header>
