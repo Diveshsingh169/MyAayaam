@@ -133,14 +133,6 @@ export default function WorkspaceHeader({
                     <span className="workspace-account-menu__label">ACCOUNT ID</span>
                     <span className="workspace-account-menu__value">#{user.id}</span>
                   </div>
-                  <div className="workspace-account-menu__actions">
-                    <button type="button" disabled className="workspace-account-menu__item" title="Profile settings will be available in a future update">
-                      <span aria-hidden="true">♙</span> My profile <small>Coming soon</small>
-                    </button>
-                    <button type="button" disabled className="workspace-account-menu__item" title="Account settings will be available in a future update">
-                      <span aria-hidden="true">⚙</span> Account settings <small>Coming soon</small>
-                    </button>
-                  </div>
                   <button
                     type="button"
                     className="workspace-account-menu__logout"
