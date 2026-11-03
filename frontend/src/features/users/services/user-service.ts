@@ -3,8 +3,14 @@ export class UserApiError extends Error {
   constructor(message: string, readonly status: number) { super(message); this.name = "UserApiError"; }
 }
 async function readError(response: Response, fallback: string): Promise<UserApiError> {
-  try { const payload = await response.json(); return new UserApiError(payload.message || fallback, response.status); }
-  catch { return new UserApiError(fallback, response.status); }
+  const text = await response.text();
+  if (!text) return new UserApiError(fallback, response.status);
+  try {
+    const payload = JSON.parse(text) as { message?: string };
+    return new UserApiError(payload.message || fallback, response.status);
+  } catch {
+    return new UserApiError(text.slice(0, 240) || fallback, response.status);
+  }
 }
 export async function listUsers(includeInactive: boolean): Promise<ManagedUser[]> {
   const response = await fetch("/api/users?include_inactive=" + includeInactive, { cache: "no-store" });
