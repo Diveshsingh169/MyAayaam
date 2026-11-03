@@ -2,6 +2,7 @@
 
 import "./dashboard.css";
 import WorkspaceHeader from "@/components/workspace-header";
+import WorkspaceSidebar from "@/components/workspace-sidebar";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -74,32 +75,7 @@ export default function DashboardPage() {
 
   return (
     <main className="dashboard-shell">
-      <aside className="dashboard-sidebar">
-        <div className="dashboard-brand">
-          <Image src="/myaayaam-mark.svg" alt="" width={36} height={36} />
-          <span>myaayaam<span>.</span></span>
-        </div>
-        <div className="workspace-switcher">
-          <span className="workspace-avatar">M</span>
-          <span><strong>MyAayaam</strong><small>Inventory workspace</small></span>
-        </div>
-        <p className="nav-caption">WORKSPACE</p>
-        <nav className="side-navigation" aria-label="Main navigation">
-          <a className="side-link active" href="/dashboard"><span className="nav-icon">◫</span> Overview</a>
-          {user.role === "super_admin" && <a className="side-link" href="/dashboard/departments"><span className="nav-icon">▦</span> Departments</a>}
-          {(user.role === "super_admin" || user.role === "department_admin") && <span className="side-link disabled" aria-disabled="true"><span className="nav-icon">♙</span> User management <span className="coming-soon">Soon</span></span>}
-          <span className="side-link disabled" aria-disabled="true"><span className="nav-icon">▤</span> Inventory <span className="coming-soon">Soon</span></span>
-          <span className="side-link disabled" aria-disabled="true"><span className="nav-icon">◇</span> Products <span className="coming-soon">Soon</span></span>
-          <span className="side-link disabled" aria-disabled="true"><span className="nav-icon">▥</span> Reports <span className="coming-soon">Soon</span></span>
-        </nav>
-        <div className="sidebar-bottom">
-          <div className="help-card"><span className="help-spark">✳</span><strong>Need a hand?</strong><p>Your workspace is just getting started.</p><span className="help-contact-disabled">Support options coming soon</span></div>
-          <div className="profile-mini">
-            <span className="profile-avatar">{user.name.slice(0, 1).toUpperCase()}</span>
-            <span className="profile-details"><strong>{user.name}</strong><small>{roleLabels[user.role]}</small></span>
-          </div>
-        </div>
-      </aside>
+      <WorkspaceSidebar activePage="Overview" />
 
       <section className="dashboard-main">
         <WorkspaceHeader currentPage="Overview" contextLabel="YOUR WORKSPACE, AT A GLANCE" />
