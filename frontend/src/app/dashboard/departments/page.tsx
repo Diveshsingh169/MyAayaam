@@ -3,6 +3,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/button";
+import SearchField from "@/components/ui/search-field";
+import ConfirmDialog from "@/components/ui/confirm-dialog";
+import { EmptyState, ErrorState, LoadingState } from "@/components/ui/feedback-state";
 import DepartmentStats from "@/features/departments/components/department-stats";
 import DepartmentTable from "@/features/departments/components/department-table";
 import DepartmentFormModal from "@/features/departments/components/department-form-modal";
@@ -22,6 +25,7 @@ export default function DepartmentsPage() {
   const [busyId, setBusyId] = useState<number | null>(null);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const [pendingDepartment, setPendingDepartment] = useState<Department | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -71,11 +75,6 @@ export default function DepartmentsPage() {
   }
 
   async function toggle(item: Department) {
-    const action = item.is_active ? "deactivate" : "activate";
-    const confirmed = window.confirm(item.is_active
-      ? "Deactivate " + item.name + "? Assigned users will lose access until it is reactivated."
-      : "Activate " + item.name + "?");
-    if (!confirmed) return;
     setBusyId(item.id); setError(""); setNotice("");
     try {
       await setDepartmentActive(item, !item.is_active);
@@ -95,13 +94,14 @@ export default function DepartmentsPage() {
           {error && !dialog && <div className="department-alert error" role="alert">{error}</div>}
           <section className="department-list-panel">
             <div className="department-list-heading"><div><h2>All departments</h2><p>Manage names, codes and department access.</p></div><label className="inactive-toggle"><input type="checkbox" checked={includeInactive} onChange={(event) => setIncludeInactive(event.target.checked)} /> Show inactive</label></div>
-            <div className="department-toolbar"><label className="department-search"><span>⌕</span><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search departments..." aria-label="Search departments" /></label><span className="department-result-count">{filtered.length} departments</span></div>
-            {loading ? <div className="department-empty"><span className="department-loader" /><p>Loading departments…</p></div> : filtered.length === 0 ? <div className="department-empty"><span className="empty-illustration">▦</span><strong>{search ? "No matching departments" : "No departments yet"}</strong><p>{search ? "Try another name or department code." : "Create your first department to organize your workspace."}</p>{!search && <Button variant="secondary" onClick={openCreate}>Create department</Button>}</div> : (
-              <DepartmentTable departments={filtered} busyId={busyId} onEdit={openEdit} onToggle={(item) => void toggle(item)} />
+            <div className="department-toolbar"><SearchField value={search} onChange={setSearch} placeholder="Search departments..." label="Search departments" /><span className="department-result-count">{filtered.length} departments</span></div>
+            {loading ? <LoadingState label="Loading departments…" /> : filtered.length === 0 ? <EmptyState title={search ? "No matching departments" : "No departments yet"} description={search ? "Try another name or department code." : "Create your first department to organize your workspace."} action={!search ? <Button variant="secondary" onClick={openCreate}>Create department</Button> : undefined} /> : (
+              <DepartmentTable departments={filtered} busyId={busyId} onEdit={openEdit} onToggle={(item) => setPendingDepartment(item)} />
             )}
           </section>
           <p className="departments-footnote">Changes to department status immediately affect access for assigned users.</p>
 </div>
+      <ConfirmDialog open={pendingDepartment !== null} title={pendingDepartment?.is_active ? "Deactivate department?" : "Activate department?"} description={pendingDepartment?.is_active ? `Users assigned to ${pendingDepartment.name} will lose access until it is reactivated.` : `Reactivate ${pendingDepartment?.name ?? "this department"}?`} confirmLabel={pendingDepartment?.is_active ? "Deactivate" : "Activate"} destructive={Boolean(pendingDepartment?.is_active)} busy={busyId !== null} onCancel={() => setPendingDepartment(null)} onConfirm={() => { if (pendingDepartment) { void toggle(pendingDepartment); setPendingDepartment(null); } }} />
       <DepartmentFormModal open={dialog} editing={editing} values={form} onChange={setForm} onClose={() => { if (!saving) setDialog(false); }} onSubmit={save} saving={saving} error={error} />
     </>
   );
