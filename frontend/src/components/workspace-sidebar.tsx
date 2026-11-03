@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { getWorkspaceNavigation } from "@/components/ui/navigation";
 
 type SessionUser = {
   name: string;
@@ -59,28 +60,18 @@ export default function WorkspaceSidebar({ activePage }: WorkspaceSidebarProps) 
 
       <p className="nav-caption">WORKSPACE</p>
       <nav className="side-navigation" aria-label="Main navigation">
-        <Link className={activePage === "Overview" ? "side-link active" : "side-link"} href="/dashboard" aria-current={activePage === "Overview" ? "page" : undefined}>
-          <span className="nav-icon">◫</span> Overview
-        </Link>
-        {user?.role === "super_admin" && (
-          <Link className={activePage === "Departments" ? "side-link active" : "side-link"} href="/dashboard/departments" aria-current={activePage === "Departments" ? "page" : undefined}>
-            <span className="nav-icon">▦</span> Departments
-          </Link>
-        )}
-        {(user?.role === "super_admin" || user?.role === "department_admin") && (
-          <span className="side-link disabled" aria-disabled="true">
-            <span className="nav-icon">♙</span> User management <span className="coming-soon">Soon</span>
-          </span>
-        )}
-        <span className="side-link disabled" aria-disabled="true">
-          <span className="nav-icon">▤</span> Inventory <span className="coming-soon">Soon</span>
-        </span>
-        <span className="side-link disabled" aria-disabled="true">
-          <span className="nav-icon">◇</span> Products <span className="coming-soon">Soon</span>
-        </span>
-        <span className="side-link disabled" aria-disabled="true">
-          <span className="nav-icon">▥</span> Reports <span className="coming-soon">Soon</span>
-        </span>
+        {getWorkspaceNavigation(user?.role).map((item) => {
+          const isActive = item.href === "/dashboard" ? activePage === "Overview" : item.label === activePage;
+          return item.comingSoon ? (
+            <span key={item.href} className="side-link disabled" aria-disabled="true">
+              <span className="nav-icon">{item.icon}</span> {item.label} <span className="coming-soon">Soon</span>
+            </span>
+          ) : (
+            <Link key={item.href} className={isActive ? "side-link active" : "side-link"} href={item.href} aria-current={isActive ? "page" : undefined}>
+              <span className="nav-icon">{item.icon}</span> {item.label}
+            </Link>
+          );
+        })}
       </nav>
 
       <div className="sidebar-bottom">
