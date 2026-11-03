@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import Button from "@/components/ui/button";
+import Badge from "@/components/ui/badge";
 
 type Department = {
   id: number;
@@ -107,7 +109,7 @@ export default function DepartmentsPage() {
   return (
     <>
     <div className="departments-content">
-          <div className="departments-heading"><div><span className="eyebrow"><span className="eyebrow-line" /> ORGANIZATION STRUCTURE</span><h1>Departments<span>.</span></h1><p>Create and manage the departments that organize your inventory operations.</p></div><button className="department-primary-button" onClick={openCreate} type="button">＋ Add department</button></div>
+          <div className="departments-heading"><div><span className="eyebrow"><span className="eyebrow-line" /> ORGANIZATION STRUCTURE</span><h1>Departments<span>.</span></h1><p>Create and manage the departments that organize your inventory operations.</p></div><Button onClick={openCreate} leadingIcon="＋">Add department</Button></div>
           <div className="department-stats">
             <article><span className="department-stat-icon lavender">▦</span><div><small>Total departments</small><strong>{items.length}</strong></div></article>
             <article><span className="department-stat-icon sage">✓</span><div><small>Active departments</small><strong>{activeCount}</strong></div></article>
@@ -118,9 +120,9 @@ export default function DepartmentsPage() {
           <section className="department-list-panel">
             <div className="department-list-heading"><div><h2>All departments</h2><p>Manage names, codes and department access.</p></div><label className="inactive-toggle"><input type="checkbox" checked={includeInactive} onChange={(event) => setIncludeInactive(event.target.checked)} /> Show inactive</label></div>
             <div className="department-toolbar"><label className="department-search"><span>⌕</span><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search departments..." aria-label="Search departments" /></label><span className="department-result-count">{filtered.length} departments</span></div>
-            {loading ? <div className="department-empty"><span className="department-loader" /><p>Loading departments…</p></div> : filtered.length === 0 ? <div className="department-empty"><span className="empty-illustration">▦</span><strong>{search ? "No matching departments" : "No departments yet"}</strong><p>{search ? "Try another name or department code." : "Create your first department to organize your workspace."}</p>{!search && <button className="department-secondary-button" onClick={openCreate} type="button">Create department</button>}</div> : (
+            {loading ? <div className="department-empty"><span className="department-loader" /><p>Loading departments…</p></div> : filtered.length === 0 ? <div className="department-empty"><span className="empty-illustration">▦</span><strong>{search ? "No matching departments" : "No departments yet"}</strong><p>{search ? "Try another name or department code." : "Create your first department to organize your workspace."}</p>{!search && <Button variant="secondary" onClick={openCreate}>Create department</Button>}</div> : (
               <div className="department-table-wrap"><table className="department-table"><thead><tr><th>DEPARTMENT</th><th>CODE</th><th>STATUS</th><th>CREATED</th><th className="actions-heading">ACTIONS</th></tr></thead><tbody>
-                {filtered.map((item) => <tr key={item.id}><td><div className="department-name-cell"><span className="department-row-icon">{item.name.slice(0, 1).toUpperCase()}</span><div><strong>{item.name}</strong><small>{item.description || "No description added"}</small></div></div></td><td><span className="department-code">{item.code}</span></td><td><span className={item.is_active ? "department-status active" : "department-status inactive"}><i />{item.is_active ? "Active" : "Inactive"}</span></td><td className="department-date">{new Date(item.created_at).toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" })}</td><td><div className="department-actions"><button type="button" onClick={() => openEdit(item)}>Edit</button><button type="button" disabled={busyId === item.id} onClick={() => void toggle(item)}>{busyId === item.id ? "Please wait…" : item.is_active ? "Deactivate" : "Activate"}</button></div></td></tr>)}
+                {filtered.map((item) => <tr key={item.id}><td><div className="department-name-cell"><span className="department-row-icon">{item.name.slice(0, 1).toUpperCase()}</span><div><strong>{item.name}</strong><small>{item.description || "No description added"}</small></div></div></td><td><span className="department-code">{item.code}</span></td><td><Badge tone={item.is_active ? "success" : "neutral"} dot>{item.is_active ? "Active" : "Inactive"}</Badge></td><td className="department-date">{new Date(item.created_at).toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" })}</td><td><div className="department-actions"><Button size="sm" variant="secondary" onClick={() => openEdit(item)}>Edit</Button><Button size="sm" variant={item.is_active ? "danger" : "secondary"} disabled={busyId === item.id} onClick={() => void toggle(item)}>{busyId === item.id ? "Please wait…" : item.is_active ? "Deactivate" : "Activate"}</Button></div></td></tr>)}
               </tbody></table></div>
             )}
           </section>
@@ -134,7 +136,7 @@ export default function DepartmentsPage() {
             <label className="department-form-field"><span>Department code</span><input required minLength={1} maxLength={30} value={form.code} onChange={(event) => setForm({ ...form, code: event.target.value.toUpperCase().replace(/[^A-Z0-9_-]/g, "") })} placeholder="e.g. ELEC" /><small>Unique code using letters, numbers, hyphens or underscores.</small></label>
             <label className="department-form-field"><span>Description <em>Optional</em></span><textarea rows={3} maxLength={500} value={form.description} onChange={(event) => setForm({ ...form, description: event.target.value })} placeholder="What does this department handle?" /></label>
             {error && <div className="department-alert error" role="alert">{error}</div>}
-            <div className="department-modal-actions"><button className="department-secondary-button" type="button" onClick={() => setDialog(false)} disabled={saving}>Cancel</button><button className="department-primary-button" type="submit" disabled={saving}>{saving ? "Saving…" : editing ? "Save changes" : "Create department"}</button></div>
+            <div className="department-modal-actions"><Button variant="secondary" type="button" onClick={() => setDialog(false)} disabled={saving}>Cancel</Button><Button type="submit" disabled={saving}>{saving ? "Saving…" : editing ? "Save changes" : "Create department"}</Button></div>
           </form>
         </section>
       </div>}
