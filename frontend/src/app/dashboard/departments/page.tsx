@@ -3,18 +3,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/button";
-import Badge from "@/components/ui/badge";
-
-type Department = {
-  id: number;
-  name: string;
-  code: string;
-  description?: string | null;
-  is_active: boolean;
-  created_at: string;
-};
-
-const blank = { name: "", code: "", description: "" };
+import DepartmentStats from "@/features/departments/components/department-stats";
+import DepartmentTable from "@/features/departments/components/department-table";
+import DepartmentFormModal from "@/features/departments/components/department-form-modal";
+import { emptyDepartmentForm, type Department, type DepartmentFormValues } from "@/features/departments/types/department";
 
 export default function DepartmentsPage() {
   const router = useRouter();
@@ -24,7 +16,7 @@ export default function DepartmentsPage() {
   const [search, setSearch] = useState("");
   const [dialog, setDialog] = useState(false);
   const [editing, setEditing] = useState<Department | null>(null);
-  const [form, setForm] = useState(blank);
+  const [form, setForm] = useState<DepartmentFormValues>(emptyDepartmentForm);
   const [saving, setSaving] = useState(false);
   const [busyId, setBusyId] = useState<number | null>(null);
   const [error, setError] = useState("");
@@ -54,7 +46,7 @@ export default function DepartmentsPage() {
   }, [items, search]);
 
   function openCreate() {
-    setEditing(null); setForm(blank); setError(""); setNotice(""); setDialog(true);
+    setEditing(null); setForm(emptyDepartmentForm); setError(""); setNotice(""); setDialog(true);
   }
 
   function openEdit(item: Department) {
@@ -104,42 +96,23 @@ export default function DepartmentsPage() {
     } finally { setBusyId(null); }
   }
 
-  const activeCount = items.filter((item) => item.is_active).length;
-
   return (
     <>
     <div className="departments-content">
           <div className="departments-heading"><div><span className="eyebrow"><span className="eyebrow-line" /> ORGANIZATION STRUCTURE</span><h1>Departments<span>.</span></h1><p>Create and manage the departments that organize your inventory operations.</p></div><Button onClick={openCreate} leadingIcon="＋">Add department</Button></div>
-          <div className="department-stats">
-            <article><span className="department-stat-icon lavender">▦</span><div><small>Total departments</small><strong>{items.length}</strong></div></article>
-            <article><span className="department-stat-icon sage">✓</span><div><small>Active departments</small><strong>{activeCount}</strong></div></article>
-            <article><span className="department-stat-icon peach">Ⅱ</span><div><small>Inactive departments</small><strong>{items.length - activeCount}</strong></div></article>
-          </div>
+          <DepartmentStats departments={items} />
           {notice && <div className="department-alert success" role="status">{notice}</div>}
           {error && !dialog && <div className="department-alert error" role="alert">{error}</div>}
           <section className="department-list-panel">
             <div className="department-list-heading"><div><h2>All departments</h2><p>Manage names, codes and department access.</p></div><label className="inactive-toggle"><input type="checkbox" checked={includeInactive} onChange={(event) => setIncludeInactive(event.target.checked)} /> Show inactive</label></div>
             <div className="department-toolbar"><label className="department-search"><span>⌕</span><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search departments..." aria-label="Search departments" /></label><span className="department-result-count">{filtered.length} departments</span></div>
             {loading ? <div className="department-empty"><span className="department-loader" /><p>Loading departments…</p></div> : filtered.length === 0 ? <div className="department-empty"><span className="empty-illustration">▦</span><strong>{search ? "No matching departments" : "No departments yet"}</strong><p>{search ? "Try another name or department code." : "Create your first department to organize your workspace."}</p>{!search && <Button variant="secondary" onClick={openCreate}>Create department</Button>}</div> : (
-              <div className="department-table-wrap"><table className="department-table"><thead><tr><th>DEPARTMENT</th><th>CODE</th><th>STATUS</th><th>CREATED</th><th className="actions-heading">ACTIONS</th></tr></thead><tbody>
-                {filtered.map((item) => <tr key={item.id}><td><div className="department-name-cell"><span className="department-row-icon">{item.name.slice(0, 1).toUpperCase()}</span><div><strong>{item.name}</strong><small>{item.description || "No description added"}</small></div></div></td><td><span className="department-code">{item.code}</span></td><td><Badge tone={item.is_active ? "success" : "neutral"} dot>{item.is_active ? "Active" : "Inactive"}</Badge></td><td className="department-date">{new Date(item.created_at).toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" })}</td><td><div className="department-actions"><Button size="sm" variant="secondary" onClick={() => openEdit(item)}>Edit</Button><Button size="sm" variant={item.is_active ? "danger" : "secondary"} disabled={busyId === item.id} onClick={() => void toggle(item)}>{busyId === item.id ? "Please wait…" : item.is_active ? "Deactivate" : "Activate"}</Button></div></td></tr>)}
-              </tbody></table></div>
+              <DepartmentTable departments={filtered} busyId={busyId} onEdit={openEdit} onToggle={(item) => void toggle(item)} />
             )}
           </section>
           <p className="departments-footnote">Changes to department status immediately affect access for assigned users.</p>
 </div>
-      {dialog && <div className="department-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget && !saving) setDialog(false); }}>
-        <section className="department-modal" role="dialog" aria-modal="true" aria-labelledby="department-dialog-title">
-          <div className="department-modal-heading"><div><span className="eyebrow">ORGANIZATION STRUCTURE</span><h2 id="department-dialog-title">{editing ? "Edit department" : "Create department"}</h2><p>{editing ? "Update this department's details." : "Add a department to your organization."}</p></div><button type="button" aria-label="Close dialog" onClick={() => setDialog(false)} disabled={saving}>×</button></div>
-          <form onSubmit={save}>
-            <label className="department-form-field"><span>Department name</span><input required minLength={1} maxLength={120} value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} placeholder="e.g. Electronics" /></label>
-            <label className="department-form-field"><span>Department code</span><input required minLength={1} maxLength={30} value={form.code} onChange={(event) => setForm({ ...form, code: event.target.value.toUpperCase().replace(/[^A-Z0-9_-]/g, "") })} placeholder="e.g. ELEC" /><small>Unique code using letters, numbers, hyphens or underscores.</small></label>
-            <label className="department-form-field"><span>Description <em>Optional</em></span><textarea rows={3} maxLength={500} value={form.description} onChange={(event) => setForm({ ...form, description: event.target.value })} placeholder="What does this department handle?" /></label>
-            {error && <div className="department-alert error" role="alert">{error}</div>}
-            <div className="department-modal-actions"><Button variant="secondary" type="button" onClick={() => setDialog(false)} disabled={saving}>Cancel</Button><Button type="submit" disabled={saving}>{saving ? "Saving…" : editing ? "Save changes" : "Create department"}</Button></div>
-          </form>
-        </section>
-      </div>}
+      <DepartmentFormModal open={dialog} editing={editing} values={form} onChange={setForm} onClose={() => { if (!saving) setDialog(false); }} onSubmit={save} saving={saving} error={error} />
     </>
   );
 }
