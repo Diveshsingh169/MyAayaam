@@ -7,7 +7,7 @@ import DepartmentStats from "@/features/departments/components/department-stats"
 import DepartmentTable from "@/features/departments/components/department-table";
 import DepartmentFormModal from "@/features/departments/components/department-form-modal";
 import { emptyDepartmentForm, type Department, type DepartmentFormValues } from "@/features/departments/types/department";
-import { listDepartments, saveDepartment, setDepartmentActive } from "@/features/departments/services/department-service";
+import { DepartmentApiError, listDepartments, saveDepartment, setDepartmentActive } from "@/features/departments/services/department-service";
 
 export default function DepartmentsPage() {
   const router = useRouter();
@@ -29,6 +29,10 @@ export default function DepartmentsPage() {
     try {
       setItems(await listDepartments(includeInactive));
     } catch (err) {
+      if (err instanceof DepartmentApiError && err.status === 401) {
+        router.replace("/");
+        return;
+      }
       setError(err instanceof Error ? err.message : "Unable to load departments.");
     } finally {
       setLoading(false);
