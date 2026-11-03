@@ -105,6 +105,7 @@ export default function DepartmentsPage() {
   const activeCount = items.filter((item) => item.is_active).length;
 
   return (
+    <>
     <div className="departments-content">
           <div className="departments-heading"><div><span className="eyebrow"><span className="eyebrow-line" /> ORGANIZATION STRUCTURE</span><h1>Departments<span>.</span></h1><p>Create and manage the departments that organize your inventory operations.</p></div><button className="department-primary-button" onClick={openCreate} type="button">＋ Add department</button></div>
           <div className="department-stats">
@@ -137,5 +138,6 @@ export default function DepartmentsPage() {
           </form>
         </section>
       </div>}
+    </>
   );
 }
