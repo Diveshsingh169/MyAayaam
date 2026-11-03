@@ -1,8 +1,5 @@
 "use client";
 
-import "./dashboard.css";
-import WorkspaceHeader from "@/components/workspace-header";
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -73,38 +70,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="dashboard-shell">
-      <aside className="dashboard-sidebar">
-        <div className="dashboard-brand">
-          <Image src="/myaayaam-mark.svg" alt="" width={36} height={36} />
-          <span>myaayaam<span>.</span></span>
-        </div>
-        <div className="workspace-switcher">
-          <span className="workspace-avatar">M</span>
-          <span><strong>MyAayaam</strong><small>Inventory workspace</small></span>
-        </div>
-        <p className="nav-caption">WORKSPACE</p>
-        <nav className="side-navigation" aria-label="Main navigation">
-          <a className="side-link active" href="/dashboard"><span className="nav-icon">◫</span> Overview</a>
-          {user.role === "super_admin" && <a className="side-link" href="/dashboard/departments"><span className="nav-icon">▦</span> Departments</a>}
-          {(user.role === "super_admin" || user.role === "department_admin") && <span className="side-link disabled" aria-disabled="true"><span className="nav-icon">♙</span> User management <span className="coming-soon">Soon</span></span>}
-          <span className="side-link disabled" aria-disabled="true"><span className="nav-icon">▤</span> Inventory <span className="coming-soon">Soon</span></span>
-          <span className="side-link disabled" aria-disabled="true"><span className="nav-icon">◇</span> Products <span className="coming-soon">Soon</span></span>
-          <span className="side-link disabled" aria-disabled="true"><span className="nav-icon">▥</span> Reports <span className="coming-soon">Soon</span></span>
-        </nav>
-        <div className="sidebar-bottom">
-          <div className="help-card"><span className="help-spark">✳</span><strong>Need a hand?</strong><p>Your workspace is just getting started.</p><span className="help-contact-disabled">Support options coming soon</span></div>
-          <div className="profile-mini">
-            <span className="profile-avatar">{user.name.slice(0, 1).toUpperCase()}</span>
-            <span className="profile-details"><strong>{user.name}</strong><small>{roleLabels[user.role]}</small></span>
-          </div>
-        </div>
-      </aside>
-
-      <section className="dashboard-main">
-        <WorkspaceHeader currentPage="Overview" contextLabel="YOUR WORKSPACE, AT A GLANCE" />
-
-        <div className="dashboard-content">
+    <div className="dashboard-content">
           <div className="dashboard-welcome">
             <div><span className="eyebrow"><span className="eyebrow-line" /> YOUR SPACE, IN SYNC</span><h1>Good {new Date().getHours() < 12 ? "morning" : new Date().getHours() < 18 ? "afternoon" : "evening"}, {user.name.split(" ")[0]}<span>.</span></h1><p>Here’s what’s happening across your workspace today.</p></div>
             <div className="date-chip"><span className="date-dot" /> Workspace active</div>
@@ -124,8 +90,6 @@ export default function DashboardPage() {
 
           <section className="account-panel"><div><span className="eyebrow">SIGNED IN AS</span><h3>{user.name}</h3><p>{user.email}</p></div><div className="account-meta"><span className="role-pill">{roleLabels[user.role]}</span><span className="account-id">Account #{user.id}</span></div><button className="logout-button" type="button" onClick={handleLogout} disabled={signingOut}>{signingOut ? "Signing out…" : "Sign out"} <span>↗</span></button></section>
           <p className="dashboard-footnote">MyAayaam <span>·</span> Thoughtful tools for better control.</p>
-        </div>
-      </section>
-    </main>
+</div>
   );
 }
