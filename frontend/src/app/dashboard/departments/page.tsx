@@ -7,6 +7,7 @@ import DepartmentStats from "@/features/departments/components/department-stats"
 import DepartmentTable from "@/features/departments/components/department-table";
 import DepartmentFormModal from "@/features/departments/components/department-form-modal";
 import { emptyDepartmentForm, type Department, type DepartmentFormValues } from "@/features/departments/types/department";
+import { listDepartments, saveDepartment, setDepartmentActive } from "@/features/departments/services/department-service";
 
 export default function DepartmentsPage() {
   const router = useRouter();
@@ -26,11 +27,7 @@ export default function DepartmentsPage() {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch("/api/departments?include_inactive=" + includeInactive, { cache: "no-store" });
-      if (response.status === 401) { router.replace("/"); return; }
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "Unable to load departments.");
-      setItems(data.departments || []);
+      setItems(await listDepartments(includeInactive));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to load departments.");
     } finally {
@@ -60,13 +57,7 @@ export default function DepartmentsPage() {
     if (saving) return;
     setSaving(true); setError("");
     try {
-      const response = await fetch(editing ? "/api/departments/" + editing.id : "/api/departments", {
-        method: editing ? "PUT" : "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: form.name.trim(), code: form.code.trim().toUpperCase(), description: form.description.trim() || null }),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "Unable to save department.");
+      await saveDepartment(form, editing?.id);
       setDialog(false);
       setNotice(editing ? "Department updated successfully." : "Department created successfully.");
       await load();
@@ -83,12 +74,7 @@ export default function DepartmentsPage() {
     if (!confirmed) return;
     setBusyId(item.id); setError(""); setNotice("");
     try {
-      const response = await fetch("/api/departments/" + item.id, {
-        method: "PATCH", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ is_active: !item.is_active }),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "Unable to " + action + " department.");
+      await setDepartmentActive(item, !item.is_active);
       setNotice(item.name + (item.is_active ? " deactivated." : " activated."));
       await load();
     } catch (err) {
