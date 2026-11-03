@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import WorkspaceHeader from "@/components/workspace-header";
-import WorkspaceSidebar from "@/components/workspace-sidebar";
 
 type Department = {
   id: number;
@@ -107,11 +105,7 @@ export default function DepartmentsPage() {
   const activeCount = items.filter((item) => item.is_active).length;
 
   return (
-    <main className="dashboard-shell">
-      <WorkspaceSidebar activePage="Departments" />
-      <section className="dashboard-main">
-        <WorkspaceHeader currentPage="Departments" contextLabel="ORGANIZE YOUR WORKSPACE" />
-        <div className="departments-content">
+    <div className="departments-content">
           <div className="departments-heading"><div><span className="eyebrow"><span className="eyebrow-line" /> ORGANIZATION STRUCTURE</span><h1>Departments<span>.</span></h1><p>Create and manage the departments that organize your inventory operations.</p></div><button className="department-primary-button" onClick={openCreate} type="button">＋ Add department</button></div>
           <div className="department-stats">
             <article><span className="department-stat-icon lavender">▦</span><div><small>Total departments</small><strong>{items.length}</strong></div></article>
@@ -130,8 +124,7 @@ export default function DepartmentsPage() {
             )}
           </section>
           <p className="departments-footnote">Changes to department status immediately affect access for assigned users.</p>
-        </div>
-      </section>
+</div>
       {dialog && <div className="department-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget && !saving) setDialog(false); }}>
         <section className="department-modal" role="dialog" aria-modal="true" aria-labelledby="department-dialog-title">
           <div className="department-modal-heading"><div><span className="eyebrow">ORGANIZATION STRUCTURE</span><h2 id="department-dialog-title">{editing ? "Edit department" : "Create department"}</h2><p>{editing ? "Update this department's details." : "Add a department to your organization."}</p></div><button type="button" aria-label="Close dialog" onClick={() => setDialog(false)} disabled={saving}>×</button></div>
@@ -144,6 +137,5 @@ export default function DepartmentsPage() {
           </form>
         </section>
       </div>}
-    </main>
   );
 }
