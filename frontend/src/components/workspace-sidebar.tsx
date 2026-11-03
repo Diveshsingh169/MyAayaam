@@ -11,7 +11,7 @@ type SessionUser = {
 };
 
 type WorkspaceSidebarProps = {
-  activePage: "Overview" | "Departments";
+  activePage: "Overview" | "Departments" | "User management";
 };
 
 export default function WorkspaceSidebar({ activePage }: WorkspaceSidebarProps) {
