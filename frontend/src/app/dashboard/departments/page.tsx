@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import WorkspaceHeader from "@/components/workspace-header";
+import WorkspaceSidebar from "@/components/workspace-sidebar";
 
 type Department = {
   id: number;
@@ -108,20 +108,7 @@ export default function DepartmentsPage() {
 
   return (
     <main className="dashboard-shell">
-      <aside className="dashboard-sidebar">
-        <div className="dashboard-brand"><Image src="/myaayaam-mark.svg" alt="" width={36} height={36} /><span>myaayaam<span>.</span></span></div>
-        <div className="workspace-switcher"><span className="workspace-avatar">M</span><span><strong>MyAayaam</strong><small>Inventory workspace</small></span></div>
-        <p className="nav-caption">WORKSPACE</p>
-        <nav className="side-navigation" aria-label="Main navigation">
-          <a className="side-link" href="/dashboard"><span className="nav-icon">◫</span> Overview</a>
-          <a className="side-link active" href="/dashboard/departments"><span className="nav-icon">▦</span> Departments</a>
-          <span className="side-link disabled" aria-disabled="true"><span className="nav-icon">♙</span> User management <span className="coming-soon">Soon</span></span>
-          <span className="side-link disabled"><span className="nav-icon">▤</span> Inventory <span className="coming-soon">Soon</span></span>
-          <span className="side-link disabled"><span className="nav-icon">◇</span> Products <span className="coming-soon">Soon</span></span>
-          <span className="side-link disabled"><span className="nav-icon">▥</span> Reports <span className="coming-soon">Soon</span></span>
-        </nav>
-        <div className="sidebar-bottom"><div className="help-card"><span className="help-spark">✳</span><strong>Need a hand?</strong><p>Your workspace is just getting started.</p><span className="help-contact-disabled">Support options coming soon</span></div></div>
-      </aside>
+      <WorkspaceSidebar activePage="Departments" />
       <section className="dashboard-main">
         <WorkspaceHeader currentPage="Departments" contextLabel="ORGANIZE YOUR WORKSPACE" />
         <div className="departments-content">
