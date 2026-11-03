@@ -40,5 +40,5 @@ export default function DepartmentTable({ departments, busyId, onEdit, onToggle 
     },
   ];
 
-  return <DataTable rows={departments} columns={columns} getRowKey={(department) => department.id} className="department-table-wrap" />;
+  return <DataTable rows={departments} columns={columns} getRowKey={(department) => department.id} className="department-table-wrap" tableClassName="department-table" />;
 }
