@@ -1,0 +1,48 @@
+:root {
+  color-scheme: light;
+  --canvas: #f5f4f1;
+  --surface: #fffefa;
+  --ink: #252735;
+  --muted: #858694;
+  --line: #e9e7e2;
+  --lavender: #7772a8;
+  --lavender-deep: #625d91;
+  --sage: #a9b8a6;
+  --peach: #e9c5b2;
+  --font-body: var(--font-geist), "Inter", sans-serif;
+
+  /* Shared typography scale: use these tokens across every feature page. */
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-caption: var(--text-xs);
+  --text-label: var(--text-sm);
+  --text-body: var(--text-base);
+  --line-height-body: 1.65;
+  --line-height-compact: 1.4;
+}
+
+/* Semantic tokens for shared components and feature modules. */
+:root {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-text: var(--ink);
+  --color-text-muted: var(--muted);
+  --color-border: var(--line);
+  --color-accent: var(--lavender);
+  --color-accent-strong: var(--lavender-deep);
+  --color-success: #7e9879;
+  --color-warning: #bd9079;
+  --color-danger: #a05f55;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --shadow-soft: 0 12px 32px rgba(38, 36, 58, .06);
+  --focus-ring: 0 0 0 3px rgba(119, 114, 168, .14);
+}
