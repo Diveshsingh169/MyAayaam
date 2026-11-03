@@ -1,0 +1,16 @@
+.users-content{width:min(100%,1320px);margin:0 auto;padding:42px clamp(24px,4vw,58px) 30px}
+.user-summary-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:28px}
+.user-summary-strip>div{display:grid;gap:7px;padding:16px 18px;border:1px solid #ebe9e3;border-radius:13px;background:#fffefa}
+.user-summary-strip span{color:#9997a5;font-size:10px;font-weight:700;letter-spacing:.8px}.user-summary-strip strong{color:#3d3d4b;font-size:23px;font-weight:630}
+.user-list-panel{margin-top:22px}.user-name-cell{display:flex;min-width:230px;align-items:center;gap:11px}
+.user-row-avatar{display:grid;width:35px;height:35px;flex:0 0 auto;place-items:center;border-radius:11px;background:#efedf6;color:#7772a8;font-size:13px;font-weight:700}
+.user-name-cell strong,.user-name-cell small{display:block}.user-name-cell strong{color:#444351;font-size:var(--text-sm);font-weight:630}
+.user-name-cell small{max-width:270px;overflow:hidden;margin-top:3px;color:#9997a5;font-size:var(--text-xs);text-overflow:ellipsis}
+.user-table-wrap{overflow-x:auto}.user-table{width:100%;border-collapse:collapse;text-align:left}
+.user-table th{padding:13px 15px;background:#fffefa;color:#a09eaa;font-size:10px;font-weight:700;letter-spacing:.8px;white-space:nowrap}
+.user-table td{padding:14px 15px;border-top:1px solid #f0eee9;color:#6f6e7b;font-size:var(--text-xs);white-space:nowrap}
+.user-table th:first-child,.user-table td:first-child{padding-left:22px}.user-actions-cell{text-align:right}
+.user-toolbar select,.department-form-field select{min-height:38px;padding:0 11px;border:1px solid #e9e7e2;border-radius:9px;background:#fff;color:#686775;font:inherit;font-size:var(--text-xs)}
+.user-form-note{margin:14px 0 0;padding:11px 12px;border:1px solid #e5e9e2;border-radius:9px;background:#f5f7f3;color:#71806c;font-size:var(--text-xs);line-height:1.5}
+@media(max-width:850px){.users-content{padding:30px 20px}.user-toolbar{flex-wrap:wrap}.user-summary-strip{gap:9px}}
+@media(max-width:600px){.users-content{padding:26px 16px}.user-summary-strip{grid-template-columns:1fr}.user-table th,.user-table td{padding-right:11px;padding-left:11px}}
