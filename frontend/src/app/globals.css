@@ -350,9 +350,6 @@ a.workspace-breadcrumb-root:hover {
 .workspace-account-menu__details { display: grid; gap: 5px; margin-top: 15px; padding: 13px 0; border-top: 1px solid #eeece7; border-bottom: 1px solid #eeece7; }
 .workspace-account-menu__label { margin-top: 3px; color: #a09daa; font-size: 9px; font-weight: 700; letter-spacing: 1px; }
 .workspace-account-menu__value { overflow-wrap: anywhere; color: #5f5e6b; font-size: var(--text-xs); }
-.workspace-account-menu__actions { display: grid; gap: 3px; padding: 9px 0; border-bottom: 1px solid #eeece7; }
-.workspace-account-menu__item { display: flex; min-height: 36px; align-items: center; gap: 9px; padding: 0 7px; border: 0; border-radius: 8px; background: transparent; color: #777784; text-align: left; font-size: var(--text-xs); }
-.workspace-account-menu__item:disabled { cursor: not-allowed; opacity: .72; }
 .workspace-account-menu__item small { margin-left: auto; color: #aaa8b1; font-size: 10px; }
 .workspace-account-menu__logout { display: flex; width: 100%; min-height: 38px; align-items: center; gap: 9px; margin-top: 10px; padding: 0 9px; border: 1px solid #efdfdc; border-radius: 9px; background: #fbf4f2; color: #a3655c; cursor: pointer; font-size: var(--text-xs); font-weight: 620; text-align: left; }
 .workspace-account-menu__logout:hover { background: #f7eae7; }
