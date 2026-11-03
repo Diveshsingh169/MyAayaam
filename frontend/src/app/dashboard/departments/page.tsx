@@ -85,23 +85,28 @@ export default function DepartmentsPage() {
     } finally { setBusyId(null); }
   }
 
+  async function confirmToggle() {
+    if (!pendingDepartment) return;
+    await toggle(pendingDepartment);
+    setPendingDepartment(null);
+  }
+
   return (
     <>
     <div className="departments-content">
           <div className="departments-heading"><div><span className="eyebrow"><span className="eyebrow-line" /> ORGANIZATION STRUCTURE</span><h1>Departments<span>.</span></h1><p>Create and manage the departments that organize your inventory operations.</p></div><Button onClick={openCreate} leadingIcon="＋">Add department</Button></div>
           <DepartmentStats departments={items} />
           {notice && <div className="department-alert success" role="status">{notice}</div>}
-          {error && !dialog && <div className="department-alert error" role="alert">{error}</div>}
           <section className="department-list-panel">
             <div className="department-list-heading"><div><h2>All departments</h2><p>Manage names, codes and department access.</p></div><label className="inactive-toggle"><input type="checkbox" checked={includeInactive} onChange={(event) => setIncludeInactive(event.target.checked)} /> Show inactive</label></div>
             <div className="department-toolbar"><SearchField value={search} onChange={setSearch} placeholder="Search departments..." label="Search departments" /><span className="department-result-count">{filtered.length} departments</span></div>
-            {loading ? <LoadingState label="Loading departments…" /> : filtered.length === 0 ? <EmptyState title={search ? "No matching departments" : "No departments yet"} description={search ? "Try another name or department code." : "Create your first department to organize your workspace."} action={!search ? <Button variant="secondary" onClick={openCreate}>Create department</Button> : undefined} /> : (
+            {loading ? <LoadingState label="Loading departments…" /> : error ? <ErrorState title="Unable to load departments" description={error} action={<Button variant="secondary" onClick={() => void load()}>Try again</Button>} /> : filtered.length === 0 ? <EmptyState title={search ? "No matching departments" : "No departments yet"} description={search ? "Try another name or department code." : "Create your first department to organize your workspace."} action={!search ? <Button variant="secondary" onClick={openCreate}>Create department</Button> : undefined} /> : (
               <DepartmentTable departments={filtered} busyId={busyId} onEdit={openEdit} onToggle={(item) => setPendingDepartment(item)} />
             )}
           </section>
           <p className="departments-footnote">Changes to department status immediately affect access for assigned users.</p>
 </div>
-      <ConfirmDialog open={pendingDepartment !== null} title={pendingDepartment?.is_active ? "Deactivate department?" : "Activate department?"} description={pendingDepartment?.is_active ? `Users assigned to ${pendingDepartment.name} will lose access until it is reactivated.` : `Reactivate ${pendingDepartment?.name ?? "this department"}?`} confirmLabel={pendingDepartment?.is_active ? "Deactivate" : "Activate"} destructive={Boolean(pendingDepartment?.is_active)} busy={busyId !== null} onCancel={() => setPendingDepartment(null)} onConfirm={() => { if (pendingDepartment) { void toggle(pendingDepartment); setPendingDepartment(null); } }} />
+      <ConfirmDialog open={pendingDepartment !== null} title={pendingDepartment?.is_active ? "Deactivate department?" : "Activate department?"} description={pendingDepartment?.is_active ? `Users assigned to ${pendingDepartment.name} will lose access until it is reactivated.` : `Reactivate ${pendingDepartment?.name ?? "this department"}?`} confirmLabel={pendingDepartment?.is_active ? "Deactivate" : "Activate"} destructive={Boolean(pendingDepartment?.is_active)} busy={busyId !== null} onCancel={() => { if (busyId === null) setPendingDepartment(null); }} onConfirm={() => void confirmToggle()} />
       <DepartmentFormModal open={dialog} editing={editing} values={form} onChange={setForm} onClose={() => { if (!saving) setDialog(false); }} onSubmit={save} saving={saving} error={error} />
     </>
   );
