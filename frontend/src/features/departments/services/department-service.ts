@@ -1,14 +1,21 @@
 import type { Department, DepartmentFormValues } from "../types/department";
 
+export class DepartmentApiError extends Error {
+  constructor(message: string, readonly status: number) {
+    super(message);
+    this.name = "DepartmentApiError";
+  }
+}
+
 type DepartmentListResponse = { departments?: Department[]; message?: string };
 type DepartmentResponse = { department?: Department; message?: string };
 
 async function readError(response: Response, fallback: string): Promise<Error> {
   try {
     const payload = await response.json();
-    return new Error(payload.message || fallback);
+    return new DepartmentApiError(payload.message || fallback, response.status);
   } catch {
-    return new Error(fallback);
+    return new DepartmentApiError(fallback, response.status);
   }
 }
 
