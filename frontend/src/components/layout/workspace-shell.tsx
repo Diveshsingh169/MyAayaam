@@ -8,9 +8,10 @@ type WorkspaceShellProps = {
   children: React.ReactNode;
 };
 
-const pageContext: Record<string, { title: "Overview" | "Departments"; context: string }> = {
+const pageContext: Record<string, { title: "Overview" | "Departments" | "User management"; context: string }> = {
   "/dashboard": { title: "Overview", context: "YOUR WORKSPACE, AT A GLANCE" },
   "/dashboard/departments": { title: "Departments", context: "ORGANIZE YOUR WORKSPACE" },
+  "/dashboard/users": { title: "User management", context: "MANAGE PEOPLE & ACCESS" },
 };
 
 export default function WorkspaceShell({ children }: WorkspaceShellProps) {
