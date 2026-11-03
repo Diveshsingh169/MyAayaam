@@ -1,9 +1,5 @@
 "use client";
 
-import "./dashboard.css";
-import WorkspaceHeader from "@/components/workspace-header";
-import WorkspaceSidebar from "@/components/workspace-sidebar";
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -74,13 +70,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="dashboard-shell">
-      <WorkspaceSidebar activePage="Overview" />
-
-      <section className="dashboard-main">
-        <WorkspaceHeader currentPage="Overview" contextLabel="YOUR WORKSPACE, AT A GLANCE" />
-
-        <div className="dashboard-content">
+    <div className="dashboard-content">
           <div className="dashboard-welcome">
             <div><span className="eyebrow"><span className="eyebrow-line" /> YOUR SPACE, IN SYNC</span><h1>Good {new Date().getHours() < 12 ? "morning" : new Date().getHours() < 18 ? "afternoon" : "evening"}, {user.name.split(" ")[0]}<span>.</span></h1><p>Here’s what’s happening across your workspace today.</p></div>
             <div className="date-chip"><span className="date-dot" /> Workspace active</div>
@@ -100,8 +90,6 @@ export default function DashboardPage() {
 
           <section className="account-panel"><div><span className="eyebrow">SIGNED IN AS</span><h3>{user.name}</h3><p>{user.email}</p></div><div className="account-meta"><span className="role-pill">{roleLabels[user.role]}</span><span className="account-id">Account #{user.id}</span></div><button className="logout-button" type="button" onClick={handleLogout} disabled={signingOut}>{signingOut ? "Signing out…" : "Sign out"} <span>↗</span></button></section>
           <p className="dashboard-footnote">MyAayaam <span>·</span> Thoughtful tools for better control.</p>
-        </div>
-      </section>
-    </main>
+</div>
   );
 }
