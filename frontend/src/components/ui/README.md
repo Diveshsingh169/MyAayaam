@@ -33,3 +33,14 @@ import { Badge, Button, Card, Input, Modal } from "@/components/ui";
 ```
 
 Use the existing global design tokens for spacing, colours, typography, borders and focus states. Avoid feature-specific styles in this folder.
+
+
+## Additional shared components
+
+- **SearchField** — controlled search input with accessible label and clear action.
+- **DataTable** — typed, generic table foundation with column renderers, stable row keys, horizontal overflow handling and an empty-row fallback. Feature tables can provide a table class for their own layout details.
+- **EmptyState**, **LoadingState**, and **ErrorState** — consistent feedback patterns. Error states can include a retry action.
+- **ConfirmDialog** — confirmation dialog built on the shared Modal and Button components.
+- **Workspace navigation configuration** — `getWorkspaceNavigation(role)` filters navigation items by role. Add future workspace links in `navigation.ts` rather than duplicating role checks in the sidebar.
+
+Keep confirmation state and action execution in the feature page. Shared dialogs should not perform API requests themselves.
