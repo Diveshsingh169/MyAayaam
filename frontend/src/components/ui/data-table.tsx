@@ -5,6 +5,7 @@ export type DataTableColumn<T> = {
   header: string;
   render: (row: T) => ReactNode;
   className?: string;
+  tableClassName?: string;
 };
 
 type DataTableProps<T> = {
@@ -21,10 +22,11 @@ export default function DataTable<T>({
   getRowKey,
   emptyMessage = "No records found.",
   className = "",
+  tableClassName = "",
 }: DataTableProps<T>) {
   return (
     <div className={["ui-data-table-wrap", className].filter(Boolean).join(" ")}>
-      <table className="ui-data-table">
+      <table className={["ui-data-table", tableClassName].filter(Boolean).join(" ")}>
         <thead>
           <tr>{columns.map((column) => <th key={column.key} scope="col" className={column.className}>{column.header}</th>)}</tr>
         </thead>
