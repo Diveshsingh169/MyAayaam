@@ -14,12 +14,6 @@ type WorkspaceSidebarProps = {
   activePage: "Overview" | "Departments";
 };
 
-const roleLabels: Record<SessionUser["role"], string> = {
-  super_admin: "Super Admin",
-  department_admin: "Department Admin",
-  worker: "Worker",
-};
-
 export default function WorkspaceSidebar({ activePage }: WorkspaceSidebarProps) {
   const [user, setUser] = useState<SessionUser | null>(null);
 
@@ -81,16 +75,7 @@ export default function WorkspaceSidebar({ activePage }: WorkspaceSidebarProps) 
           <p>Your workspace is just getting started.</p>
           <span className="help-contact-disabled">Support options coming soon</span>
         </div>
-        {user && (
-          <div className="profile-mini">
-            <span className="profile-avatar">{user.name.trim().charAt(0).toUpperCase()}</span>
-            <span className="profile-details">
-              <strong>{user.name}</strong>
-              <small>{roleLabels[user.role]}</small>
-            </span>
-          </div>
-        )}
-      </div>
+</div>
     </aside>
   );
 }
